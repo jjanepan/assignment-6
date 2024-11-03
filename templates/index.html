@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Linear Regression Assumptions</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>Linear Regression Simulation</h1>
+      </header>
+
+      <section class="form-section">
+        <form method="POST" class="simulation-form">
+          <div class="form-group">
+            <label for="N">Sample Size (N):</label>
+            <input type="number" id="N" name="N" required />
+          </div>
+
+          <div class="form-group">
+            <label for="mu">Mean (μ):</label>
+            <input type="number" step="any" id="mu" name="mu" required />
+          </div>
+
+          <div class="form-group">
+            <label for="sigma2">Variance (σ²):</label>
+            <input
+              type="number"
+              step="any"
+              id="sigma2"
+              name="sigma2"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="S">Number of Simulations (S):</label>
+            <input type="number" id="S" name="S" required />
+          </div>
+
+          <button type="submit" class="submit-button">Generate</button>
+        </form>
+      </section>
+
+      {% if plot1 and plot2 %}
+      <section class="results-section">
+        <div class="result">
+          <h2>Generated Plot</h2>
+          <img src="{{ plot1 }}" alt="Regression Plot" class="result-image" />
+        </div>
+
+        <div class="result">
+          <h2>Histogram of Slopes and Intercepts</h2>
+          <img
+            src="{{ plot2 }}"
+            alt="Histogram of Slopes and Intercepts"
+            class="result-image"
+          />
+        </div>
+
+        <div class="analysis">
+          <p>
+            Proportion of slopes more extreme than calculated slope: {{
+            slope_extreme | round(2) }}
+          </p>
+          <p>
+            Proportion of intercepts more extreme than calculated intercept: {{
+            intercept_extreme | round(2) }}
+          </p>
+        </div>
+      </section>
+      {% endif %}
+    </main>
+  </body>
+</html>
